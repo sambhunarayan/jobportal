@@ -2,29 +2,24 @@
  * Full-stack Job Portal Backend
  * Tech: Node.js + Express + MySQL + JWT + Joi validation
  */
-
+require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2/promise');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const Joi = require('joi');
 const cors = require('cors');
-
-require('dotenv').config();
-
 const app = express();
 const PORT = process.env.PORT || 5000;
-const ACCESS_TOKEN_SECRET =
-	process.env.ACCESS_TOKEN_SECRET || 'youraccesstokensecret';
-const REFRESH_TOKEN_SECRET =
-	process.env.REFRESH_TOKEN_SECRET || 'yourrefreshtokensecret';
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 
 // MySQL connection pool
 const pool = mysql.createPool({
-	host: process.env.DB_HOST || 'localhost',
-	user: process.env.DB_USER || 'root',
-	password: process.env.DB_PASSWORD || '',
-	database: process.env.DB_NAME || 'jobPortal',
+	host: process.env.DB_HOST,
+	user: process.env.DB_USER,
+	password: process.env.DB_PASSWORD,
+	database: process.env.DB_NAME,
 	waitForConnections: true,
 	connectionLimit: 10,
 	queueLimit: 0,
@@ -399,5 +394,5 @@ app.get(
 	},
 );
 app.listen(PORT, () => {
-	log.info(`Server running on port ${PORT}`);
+	console.log(`Server running on port ${PORT}`);
 });
